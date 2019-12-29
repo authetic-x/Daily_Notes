@@ -54,3 +54,40 @@ h1 > strong {
 
 
 
+## 伪类
+
+```java
+// 就像a标签有一个link类一样
+a:link {color: blue;}
+a:visited {color: red;}
+a:hover {
+    font-size: 20px;
+}
+
+input:focus {
+	background: silver;
+	font-weight: bold;
+}
+```
+
+
+
+## 伪元素
+
+```java
+p:first-letter {
+    font-size: 200%;
+}
+p:first-line {
+    color: purple;
+}
+
+h2:before {
+    content: "]]";
+    color: silver;
+}
+h2:after {
+    content: "The end;";
+}
+```
+
