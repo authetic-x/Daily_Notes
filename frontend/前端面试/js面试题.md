@@ -29,7 +29,7 @@
 
 7. !! 强制转换布尔类型
 
-8. `execution context` 有两个阶段：`compilation` 和 `execution`。前一个阶段是变量提升的过程，js 将 var 声明的变量以及函数提升到执行上下文的顶部，后一个阶段就是执行阶段。
+8. `execution context` 有两个阶段：`compilation` 和 `execution`。前一个阶段是变量提升的过程，js 将 var 声明的变量以及函数提升到执行上下文的顶部，后一个阶段就是执行阶段。注意：以表达式形式声明的函数不会被提升
 
 9. 执行上下文和作用域的区别：`The Execution Context is the "environment of code" that is currently executing`，`Scope in JavaScript is the area where we have valid access to variables or functions`。ES6 新增了块级作用域，在里面声明的 `let, const` 变量在外部不可访问
 
@@ -54,4 +54,97 @@
     // 2. 箭头函数
     ```
 
-11. 
+11. 手写数组的 `map, filter, reduce` 方法
+
+    ```js
+    Array.prototype.myMap = (callBack) => {
+    	const arr = this;
+    	if (typeof callBack !== 'function') {
+    		return [];
+    	}
+    	const res = [];
+    	for (let i = 0; i < arr.length; i ++ ) {
+    		res.push(callBack(arr[i], i, arr));
+    	}
+    	return res;
+    }
+    
+    Array.prototype.myFilter = (callBack) => {
+    	if (typeof callBack !== 'function') return [];
+    	const arr = this;
+    	const res = [];
+    	for (let i = 0; i < arr.length; i ++ ) {
+    		if (callBack(arr[i], i, arr)) {
+    			res.push(arr[i]);
+    		}
+    	}
+    	return res;
+    }
+    
+    Array.prototype.myReduce(callBack, initial) => {
+    	if (typeof callBack !== 'function') return null;
+    	const arr = this;
+    	const hasInitialValue = initial !== undefined;
+    	let value = hasInitialValue ? initial : arr[0];
+    	for (let i = hasInitialValue ? 0 : 1; i < arr.length; i ++ ) {
+    		value = callBack(value, arr[i], i, arr);
+    	}
+    	return value;
+    }
+    ```
+
+12. 创建没有原型的对象：
+
+    ```js
+    const obj = Object.create(null);
+    ```
+
+13. 利用 Set 删除数组中的重复元素：
+
+    ```js
+    const newArr = [...new Set(arr)];
+    ```
+
+14. 将回调形式的异步函数转化为 Promise 形式的异步函数
+
+    ```js
+    const toPromise (asyncFunc) => {
+    	return (...args) => {
+    		return new Promise((resolve, reject) => {
+    			asyncFunc(...args, (err, res) => {
+    				return err ? reject(err) : resolve(res);
+    			});
+    		});
+    	}
+    }
+    
+    const promReadFile = toPromise(fs.readFile);
+    promReadFile('./index.js')
+    	.then((data) => {
+    		console.log(data);
+    	})
+    	.catch((err) => {
+    		console.log(err);
+    	});
+    ```
+
+15. `async/await` 建立在 Promise 之上，是我们的异步逻辑变得更加清晰。async 函数会默认返回一个 Promise，await 是一个阻塞操作。
+
+16. 判断一个对象是否有某个属性的三种办法：
+
+    1. `console.log('prop' in obj);`
+    2. `console.log(obj.hasOwnProperty('prop'));`
+    3. `console.log(obj['prop'])`
+
+17. 创建对象的三种方法：
+
+    1. 对象字面量（花括号）
+    2. 构造函数或类 (本质也是构造函数，基于原型继承，一种语法糖)
+    3. `Object.create()`
+
+18. `Object.freeze()` 函数让对象变为 `immutable`，无法增删改，就连原型也不可改变；`Object.seal()` 函数让对象变得密封起来，无法增加新的属性，而且变为 `non-configurable`
+
+19. `in` 操作符和 `Object.hasOwnProperty()` 的区别是前者会搜索原型，后者不会
+
+
+
