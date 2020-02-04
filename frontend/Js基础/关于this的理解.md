@@ -27,3 +27,19 @@ Function.prototype.myCall = function(context, ...args) {
 }
 ```
 
+
+
+## 面试问题
+
+```js
+const arrayLike = {
+    length: 0; // 所谓的类数组就是拥有length属性的对象
+}
+const call = [].push.call;
+call(arrayLike, 1);
+console.log(arrayLike[0]);
+```
+
+为什么报错？
+
+其实只要动手写过 `call` 的实现，就可以轻松理解。因为 call 是在全局作用域中调用的，所以 `this` 是 global，也就是所它无法获取到 push 函数并将其作为 arrayLike 的成员对象了。这里我们也可以了解到，要将一个函数的内部 this 指定给某个对象，简单的做法就是将那个函数变为指定对象的成员函数。
