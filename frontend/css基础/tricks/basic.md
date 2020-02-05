@@ -30,3 +30,26 @@
 * relative + absolute
 * css3的 transform
 * flex、grid
+
+
+
+## 常见布局
+
+### 1. 博客两栏布局，左栏固定宽高，高度占满屏幕，右栏占满剩余空间
+
+```js
+.left {
+	width: 270px;
+    height: 100%
+    position: fixed;
+}
+
+.right {
+    postion: absolute;
+    min-height: 100%;
+    left: 0;
+    right: 0;
+    margin-left: 270px;
+}
+```
+

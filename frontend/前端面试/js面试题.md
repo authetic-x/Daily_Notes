@@ -191,5 +191,6 @@
 39. async/await
 40. 实现一个 sleep 函数
 41. Promise.all
-42. 
+42. Symbol
+43. 
 
