@@ -151,46 +151,96 @@
 ## 掘金上的高频面试题总结
 
 1. 手写类继承
+
 2. 手写数组去重
+
 3. 如何遍历对象属性
+
+   ```js
+   // 目前为止发现四个方法，暂不知区别
+   Object.keys(target);
+   Obejct.getOwnPropertyNames(target);
+   Obejct.getOwnPropertySymbols(target);
+   Reflect.ownKeys(target)
+   ```
+
 4. 手写 jsonp 实现
+
 5. 跨域是什么，跨域的几种实现方案
+
 6. 手写 once, debounce 函数
+
 7. 实现拖拽
+
 8. 手写原生 ajax, 封装成类 promise
+
 9. let, const 区别
+
 10. setTimeout, setInterval, requestAnimation 区别， 倒计时使用哪一个
+
 11. js 简单合并是按需加载还是按模块加载
+
 12. js 实现继承的多种方案
+
 13. 监控 js 对象属性变更
+
 14. 如何实现一个私有变量，只能用成员函数访问
+
 15. js 垃圾回收机制
+
 16. localStorage 和 Cookie/sessionStorage
+
 17. websocket 和 ajax 轮询
+
 18. 原型链和伪数组
+
 19. document.ready 和 window.onload 方法
+
 20. 同源策略
-21.  字符串去重
+
+21. 字符串去重
+
 22. 自己实现一个事件委托
+
 23. 性能优化
+
 24. 写一个倒计时页面
+
 25. Promise 是如何实现的，自己实现一个 Promise
+
 26. Promise接收的函数中resolve()后的代码是否会执行？
+
 27. 图片懒加载，预加载
+
 28. 监听一段时间内用户对我方网页的操作
+
 29. for in 和 for of 区别
+
 30. react 中的 setState为什么异步
+
 31. 数组扁平化
+
 32. 闭包的使用场景
+
 33. 为什么reducer是纯函数
+
 34. react 中的 叶子节点之间如何通信，组件间通信
+
 35. 节流，防抖
+
 36. MVC vs MVVM
+
 37. 观察者模式
+
 38. **继承和闭包必考**
+
 39. async/await
+
 40. 实现一个 sleep 函数
+
 41. Promise.all
+
 42. Symbol
+
 43. 
 
