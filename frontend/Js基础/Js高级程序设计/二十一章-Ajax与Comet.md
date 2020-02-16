@@ -3,10 +3,13 @@
 ```js
 var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function() {
-    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-        alert(xhr.responseText);
-    } else {
-        alert("Request was unsuccessful: " + xhr.status);
+    if (xhr.readyState === 4) {
+        if ((xhr.status >= 200 && xhr.status < 300) 
+            || xhr.status == 304) {
+            alert(xhr.responseText);
+        } else {
+            alert("Request was unsuccessful: " + xhr.status);
+        }
     }
 }
 
@@ -111,7 +114,7 @@ document.body.insertBefore(script, document.body.firstChild);
 
 ### SSE (Server-Sent Events)
 
-SSE 是围绕只读 Comet 交互推出的 API 或者模式。服务器响应的 MIME 类型必须是 `text/event-stream`。可以说 SSE 是 Comet 的一种简捷的实现方式
+SSE 是围绕只读 Comet 交互推出的 API 或者模式。服务器响应的 MIME 类型必须是 `text/event-stream`。可以说 SSE 是 Comet 的一种简捷的实现方式，也支持跨域
 
 ```js
 var source = new EventSource("myevents.php");
