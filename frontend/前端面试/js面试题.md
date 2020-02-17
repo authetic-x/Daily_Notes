@@ -152,19 +152,21 @@
 
 1. 手写类继承
 
-2. 实现类似map的功能
+2. 深拷贝和浅拷贝
+
+3. 实现类似map的功能
 
    ```js
    const newArr = Array.from(arr, item => item*2)
    ```
 
-3. 手写数组去重
+4. 手写数组去重
 
    ```js
    const newArr = [...new Set(arr)];
    ```
 
-4. 求两个数组的交集
+5. 求两个数组的交集
 
    ```js
    const arr1 = [1, 4, 4, 5, 6, 9]
@@ -175,13 +177,13 @@
    })
    ```
 
-5. 删除数组的假值
+6. 删除数组的假值
 
    ```js
    const newArr = arr.filter(Boolean)
    ```
 
-6. 如何遍历对象属性
+7. 如何遍历对象属性
 
    ```js
    // 目前为止发现四个方法，暂不知区别
@@ -192,11 +194,11 @@
    Reflect.ownKeys(target)
    ```
 
-7. 同源策略
+8. 同源策略
 
    如果两个页面拥有相同的协议、域名、端口，那么这两个页面就是同源的
 
-8. 手写 jsonp 实现
+9. 手写 jsonp 实现
 
    同源策略限制了跨域的读请求，并没有限制对跨域嵌入请求，比如 `<img>` 标签里记载图片。因此，我们可以手动插入 `<script>` 元素来实现跨域请求。当然，只支持 `GET`
 
@@ -222,7 +224,7 @@
    }
    ```
 
-9. 跨域是什么，跨域的几种实现方案
+10. 跨域是什么，跨域的几种实现方案
 
    > #### CORS
    >
@@ -234,85 +236,106 @@
    >
    > #### Websocket
 
-10. 手写 once, debounce 函数
-
-11. **实现拖拽**
-
-12. 手写原生 ajax, 封装成类 promise
+11. 手写 once, debounce 函数
 
     ```js
+    function once(fn, context) {
+        let result
+        return function() {
+            if (fn) {
+                result = fn.apply(context || this, arguments)
+                // 核心
+                fn = null
+            }
+            return result
+        }
+    }
     
+    const debounce = (fn, interval) => {
+        let timeout = null
+        return function() {
+            if(timeout) clearTimeout(timeout)
+            timeout = setTimeout(() => {
+                fn.apply(this, arguments)
+            }, interval)
+        }
+    }
     ```
 
-13. let, const 区别
+12. **实现拖拽**
 
-14. **setTimeout, setInterval, requestAnimation 区别， 倒计时使用哪一个**
+13. 手写原生 ajax, 封装成类 promise
 
-15. **js 简单合并是按需加载还是按模块加载，延时加载和异步加载**
+    ```js
+    const ajaxPromise = function(method, url) {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHtppRequest(method, url)
+            xhr.onload() = () => {
+                if (xhr.status >= 200 && xhr.status < 300 
+                    || xhr.status === 304) {
+                    resolve(xhr.responseText)
+                } else {
+                    reject(new Error(`Request failed: ${xhr.status}`))
+                }
+            }
+            xhr.send(null)
+        })
+    }
+    
+    ajaxPromise.then(data => console.log(data))
+    ```
+
+14. let, const 区别
+
+    const 声明时必须赋值，而且不可变
+
+15. **setTimeout, setInterval 区别， 倒计时使用哪一个**
 
 16. js 实现继承的多种方案
 
-17. **监控 js 对象属性变更**
+17. 如何实现一个私有变量，只能用成员函数访问
 
-18. **如何实现一个私有变量，只能用成员函数访问**
+18. js 垃圾回收机制
 
-19. js 垃圾回收机制
+19. localStorage 和 sessionStorage
 
-20. **localStorage 和 Cookie/sessionStorage**
+    localStorage 理论上永久有效，除非主动清除。sessionStorage 仅在当前会话下有效，关闭页面或浏览器后就会被清除。因此 localStorage 适合存储持久化缓存数据，如用户偏好设置
 
-21. websocket 和 ajax 轮询
+20. websocket 和 ajax 轮询
 
-22. 原型链和伪数组
+21. **document.ready 和 window.onload 方法**
 
-23. **document.ready 和 window.onload 方法**
-
-24. 字符串去重
+22. 字符串去重
 
     ```js
     const newStr = [...new Set(Array.from(str))].join('')
     ```
 
-25. **自己实现一个事件委托**
+23. **自己实现一个事件委托**
 
-26. 性能优化
+24. **图片懒加载，预加载**
 
-27. **写一个倒计时页面**
+25. 监听一段时间内用户对我方网页的操作
 
-28. Promise 是如何实现的，自己实现一个 Promise
+26. for in 和 for of 区别
 
-29. Promise接收的函数中resolve()后的代码是否会执行？
+27. **react 中的 setState为什么异步**
 
-30. **图片懒加载，预加载**
+28. **数组扁平化**, flatMap
 
-31. 监听一段时间内用户对我方网页的操作
+29. 闭包的使用场景
 
-32. for in 和 for of 区别
+30. **为什么reducer是纯函数**
 
-33. **react 中的 setState为什么异步**
+31. react 中的 叶子节点之间如何通信，组件间通信
 
-34. **数组扁平化**
+32. MVC vs MVVM
 
-35. 闭包的使用场景
+33. **观察者模式**
 
-36. **为什么reducer是纯函数**
+34. **实现一个 sleep 函数**
 
-37. react 中的 叶子节点之间如何通信，组件间通信
+35. Symbol
 
-38. 节流，防抖
-
-39. MVC vs MVVM
-
-40. **观察者模式**
-
-41. **继承和闭包必考**
-
-42. async/await
-
-43. **实现一个 sleep 函数**
-
-44. Promise.all
-
-45. Symbol
-
-46. 
+36. 
 
