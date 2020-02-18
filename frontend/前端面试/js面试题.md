@@ -305,6 +305,8 @@
 
 21. **document.ready 和 window.onload 方法**
 
+    `window.onload` 是在页面中包含图片在内的所有元素全部加载完成才执行。`$(document).ready` 是 DOM 树加载完成之后执行，执行时机要快于前者
+
 22. 字符串去重
 
     ```js
@@ -313,11 +315,28 @@
 
 23. **自己实现一个事件委托**
 
-24. **图片懒加载，预加载**
+    由于有事件冒泡的机制，当多个元素拥有相同的事件时，可将事件绑定在其父元素上
 
-25. 监听一段时间内用户对我方网页的操作
+    ```js
+    const ul = document.getElementById('ul');
+    ul.addEventListener('click', (e) => {
+        const event = e || window.event;
+        const target = event.target;
+        if (target.nodeName === 'LI') {
+            alert(target.innerHTML);
+        }
+    });
+    ```
+
+24. Node 实现长连接
+
+25. **图片懒加载，预加载**
+
+    懒加载指延迟加载图片，用户滚动到它们之前，可视化区域外的图像不会被加载。预加载指先加载页面的主体内容，之后再在某个时刻去提前加载图片资源，减少等待事件。这样可以缓解访问页面长时间空白的问题，提升首页加载速度
 
 26. for in 和 for of 区别
+
+    `for-in` 是遍历对象的属性名，而 `for-of` 调用对象的 `[Symbol.iterator]` 方法去获取一个迭代器，遍历对象的属性值
 
 27. **react 中的 setState为什么异步**
 
@@ -333,9 +352,15 @@
 
 33. **观察者模式**
 
-34. **实现一个 sleep 函数**
+34. *实现一个 sleep 函数**
+
+    
 
 35. Symbol
 
-36. 
+    ES6 新增的基础类型，表示一个独一无二的值，可以用来防止对象中的属性名冲突。
+
+36. Node.js 运行原理 (时间循环？)
+
+37. 手写 async/await ?
 
