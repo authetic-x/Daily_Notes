@@ -350,11 +350,31 @@
 
 32. MVC vs MVVM
 
+    MVC (Model-View-Controller)，view 传送指令到 controller，controller 修改逻辑后更新 model，model 状态的改变影响 view 的变化。MVVM (Model-View-ViewModel)，双向绑定，Model 的变动自动反映在 viewModel 中，而 viewModel 和 view 之间也实现了绑定，这意味着更新 viewModel 的数据时，view 的 UI 也会发生改变。
+
 33. **观察者模式**
 
 34. *实现一个 sleep 函数**
 
+    ```js
+    // 实现sleep
+    function sleep(time) {
+    	return new Promise((resolve, reject) => {
+    		setTimeout(resolve, time);
+    	});
+    }
     
+    sleep(time).then(() => {
+    	// handle...
+    });
+    
+    // async
+    (async function() {
+    	console.log('start: ' + new Date());
+    	await sleep(3000);
+    	console.log('end: ' + new Date());
+    })();
+    ```
 
 35. Symbol
 
@@ -363,4 +383,26 @@
 36. Node.js 运行原理 (时间循环？)
 
 37. 手写 async/await ?
+
+38. 正则表达式匹配网址
+
+39. 获取dom元素的方法有哪些
+
+40. 获取盒子尺寸的方法
+
+41. js词法作用域
+
+42. URL 获取参数
+
+43. js监听css动画
+
+44.  CommonJS 和 ES Module 有何区别
+
+45. 如何实现大文件传输，如何校验文件正确与否
+
+46. 哪些事件不能向上冒泡
+
+    **UI 事件**：`load, unload, scroll`，**焦点事件**：`blur, focus`，**鼠标事件**：`mouseLeave, mouseEnter`
+
+47. 扫码登录的原理
 
