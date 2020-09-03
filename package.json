@@ -1,0 +1,29 @@
+{
+  "name": "fe-notes",
+  "version": "1.0.0",
+  "description": "Front end notes.",
+  "main": "index.js",
+  "scripts": {
+		"start": "npm run dev",
+		"dev": "vuepress dev .",
+		"build": "vuepress build .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/authetic-x/Daily_Notes.git"
+  },
+  "keywords": [
+    "Note",
+    "FE"
+  ],
+  "author": "Ethan Hsu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/authetic-x/Daily_Notes/issues"
+  },
+  "homepage": "https://github.com/authetic-x/Daily_Notes#readme",
+  "devDependencies": {
+    "vuepress": "^1.5.4"
+  }
+}

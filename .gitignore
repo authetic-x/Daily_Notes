@@ -5,6 +5,12 @@
 *.so
 *.dylib
 
+#node_modules
+/node_modules
+
+# vuepress
+dist
+
 # Test binary, build with `go test -c`
 *.test
 
