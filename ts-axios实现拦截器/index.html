@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>ts-axios实现拦截器 | Ethan Hsu的博客</title>
+    <meta name="generator" content="VuePress 1.5.4">
+    
+    <meta name="description" content="I have an idea.">
+    <link rel="preload" href="/FE-Notes/assets/css/0.styles.3dbf0a24.css" as="style"><link rel="preload" href="/FE-Notes/assets/js/app.1f7f5e3d.js" as="script"><link rel="preload" href="/FE-Notes/assets/js/2.511240e2.js" as="script"><link rel="preload" href="/FE-Notes/assets/js/8.9df1afce.js" as="script"><link rel="prefetch" href="/FE-Notes/assets/js/10.042489a7.js"><link rel="prefetch" href="/FE-Notes/assets/js/3.823b1e2d.js"><link rel="prefetch" href="/FE-Notes/assets/js/4.5ed19beb.js"><link rel="prefetch" href="/FE-Notes/assets/js/5.b75b3132.js"><link rel="prefetch" href="/FE-Notes/assets/js/6.6197c9d5.js"><link rel="prefetch" href="/FE-Notes/assets/js/7.ed9d10c0.js"><link rel="prefetch" href="/FE-Notes/assets/js/9.4bc5a633.js">
+    <link rel="stylesheet" href="/FE-Notes/assets/css/0.styles.3dbf0a24.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/FE-Notes/" class="home-link router-link-active"><!----> <span class="site-name">Ethan Hsu的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/FE-Notes/guide/" class="nav-link">
+  文章汇总
+</a></div><div class="nav-item"><a href="/FE-Notes/" class="nav-link">
+  算法专题
+</a></div> <a href="https://github.com/authetic-x/FE-Notes" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/FE-Notes/guide/" class="nav-link">
+  文章汇总
+</a></div><div class="nav-item"><a href="/FE-Notes/" class="nav-link">
+  算法专题
+</a></div> <a href="https://github.com/authetic-x/FE-Notes" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>ts-axios实现拦截器</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/FE-Notes/ts-axios实现拦截器/#axios-拦截器示例" class="sidebar-link">axios 拦截器示例</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/FE-Notes/ts-axios实现拦截器/#ts-实现拦截器" class="sidebar-link">TS 实现拦截器</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/FE-Notes/ts-axios实现拦截器/#类型定义" class="sidebar-link">类型定义</a></li><li class="sidebar-sub-header"><a href="/FE-Notes/ts-axios实现拦截器/#interceptormanager-具体实现" class="sidebar-link">InterceptorManager 具体实现</a></li><li class="sidebar-sub-header"><a href="/FE-Notes/ts-axios实现拦截器/#请求、响应拦截器实现" class="sidebar-link">请求、响应拦截器实现</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="axios-拦截器示例"><a href="#axios-拦截器示例" class="header-anchor">#</a> axios 拦截器示例</h2> <div class="language-js extra-class"><pre class="language-js"><code>axios<span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span>request<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token parameter">config</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  config<span class="token punctuation">.</span>headers<span class="token punctuation">[</span>token<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'xxxxx'</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> config
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token parameter">error</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> incep <span class="token operator">=</span> axios<span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span>response<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token parameter">response</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 对响应数据做一些处理</span>
+  <span class="token keyword">return</span> response<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token parameter">error</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+axios<span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span>response<span class="token punctuation">.</span><span class="token function">eject</span><span class="token punctuation">(</span>incep<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>拦截器可以添加多个。对于请求拦截器，后添加的先执行；对于响应拦截器，先添加的先执行。拦截器还可以用 <code>eject</code>
+方法撤回。</p> <h2 id="ts-实现拦截器"><a href="#ts-实现拦截器" class="header-anchor">#</a> TS 实现拦截器</h2> <h3 id="类型定义"><a href="#类型定义" class="header-anchor">#</a> 类型定义</h3> <p>对于请求和响应拦截器，它们都有 <code>use</code> 和 <code>eject</code> 方法，我们可以抽象为一个管理类</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">interface</span> <span class="token class-name">ResolvedFn</span><span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">(</span>val<span class="token operator">:</span> <span class="token constant">T</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token constant">T</span> <span class="token operator">|</span> Promise<span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">&gt;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">interface</span> <span class="token class-name">RejectedFn</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">(</span>error<span class="token operator">:</span> any<span class="token punctuation">)</span><span class="token operator">:</span> any
+<span class="token punctuation">}</span>
+
+<span class="token keyword">interface</span> <span class="token class-name">InterceptorManager</span><span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  <span class="token function">use</span><span class="token punctuation">(</span>resolve<span class="token operator">:</span> ResolvedFn<span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">&gt;</span><span class="token punctuation">,</span> rejec<span class="token operator">?</span><span class="token operator">:</span> RejectedFn<span class="token punctuation">)</span><span class="token operator">:</span> number
+
+  <span class="token function">eject</span><span class="token punctuation">(</span>id<span class="token operator">:</span> number<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="interceptormanager-具体实现"><a href="#interceptormanager-具体实现" class="header-anchor">#</a> InterceptorManager 具体实现</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">interface</span> <span class="token class-name">Interceptor</span><span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  resolve<span class="token operator">:</span> ResolvedFn<span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">&gt;</span>
+  reject<span class="token operator">?</span><span class="token operator">:</span> RejectedFn
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">InterceptorManager</span><span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">private</span> interceptors<span class="token operator">:</span> Array<span class="token operator">&lt;</span>Interceptor<span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">&gt;</span> <span class="token operator">|</span> <span class="token keyword">null</span><span class="token operator">&gt;</span>
+
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>interceptors <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">use</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token operator">:</span> ResolvedFn<span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">&gt;</span><span class="token punctuation">,</span> reject<span class="token operator">?</span><span class="token operator">:</span> RejectedFn</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      resolve<span class="token punctuation">,</span>
+      reject<span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">eject</span><span class="token punctuation">(</span><span class="token parameter">id<span class="token operator">:</span> number</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>interceptors<span class="token punctuation">[</span>id<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>interceptors<span class="token punctuation">[</span>id<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">forEach</span><span class="token punctuation">(</span><span class="token function-variable function">fn</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">interceptor<span class="token operator">:</span> Interceptor<span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">&gt;</span></span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">interceptor</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>interceptor<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">fn</span><span class="token punctuation">(</span>interceptor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p><code>use</code> 方法就像 <code>Promise</code> 的 <code>then</code> 方法一样，都是将注册的回调函数保存起来到合适的时机调用。
+<code>forEach</code> 提供遍历注册的 <code>interceptors</code> 的接口，接受一个函数参数，可以对每个 <code>interceptor</code> 做处理</p> <h3 id="请求、响应拦截器实现"><a href="#请求、响应拦截器实现" class="header-anchor">#</a> 请求、响应拦截器实现</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">interface</span> <span class="token class-name">Interceptors</span> <span class="token punctuation">{</span>
+  request<span class="token operator">:</span> InterceptorManager<span class="token operator">&lt;</span>AxiosRequestConfig<span class="token operator">&gt;</span>
+  response<span class="token operator">:</span> InterceptorManager<span class="token operator">&lt;</span>AxiosResponse<span class="token operator">&gt;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 兼容dispatchRequest方法</span>
+<span class="token keyword">interface</span> <span class="token class-name">PromiseChain</span> <span class="token punctuation">{</span>
+  resolve<span class="token operator">:</span> ResolvedFn <span class="token operator">|</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">config<span class="token operator">:</span> AxiosRequestConfig</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> AxiosPromise<span class="token punctuation">)</span>
+  reject<span class="token operator">?</span><span class="token operator">:</span> RejectedFn
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Axios</span> <span class="token punctuation">{</span>
+  interceptors<span class="token operator">:</span> Interceptors
+
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>interceptors <span class="token operator">=</span> <span class="token punctuation">{</span>
+      request<span class="token operator">:</span> <span class="token keyword">new</span> <span class="token class-name">InterceptorManager</span><span class="token operator">&lt;</span>AxiosRequestConfig<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      response<span class="token operator">:</span> <span class="token keyword">new</span> <span class="token class-name">InterceptorManager</span><span class="token operator">&lt;</span>AxiosResponse<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">request</span><span class="token punctuation">(</span>url<span class="token operator">:</span> any<span class="token punctuation">,</span> config<span class="token operator">?</span><span class="token operator">:</span> any<span class="token punctuation">)</span><span class="token operator">:</span> AxiosPromise <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> url <span class="token operator">===</span> <span class="token string">'string'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>config<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        config <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+      config<span class="token punctuation">.</span>url <span class="token operator">=</span> url
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      config <span class="token operator">=</span> url
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> chain<span class="token operator">:</span> PromisChain<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+      request<span class="token operator">:</span> dispatchRequest<span class="token punctuation">,</span>
+      reject<span class="token operator">:</span> <span class="token keyword">undefined</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">this</span><span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span>request<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">interceptor</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      chain<span class="token punctuation">.</span><span class="token function">unshift</span><span class="token punctuation">(</span>interceptor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">this</span><span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span>response<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">interceptor</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      chain<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>interceptor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">let</span> promise <span class="token operator">=</span> Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span><span class="token punctuation">(</span>chain<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> <span class="token punctuation">{</span> resolveFn<span class="token punctuation">,</span> rejectFn <span class="token punctuation">}</span> <span class="token operator">=</span> chain<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">!</span><span class="token punctuation">;</span>
+      <span class="token comment">// resolved函数需要返回config或者response的原因</span>
+      promise <span class="token operator">=</span> promise<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>resolveFn<span class="token punctuation">,</span> rejectFn<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> promise<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>其实本质就是将所有注册的拦截器按照约定的顺序调用，但是这里面有异步逻辑，响应拦截器只有等
+返回了结果才会被调用，所以需要用到 <code>Promise</code> 的链式调用。</p></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/authetic-x/FE-Notes/edit/master/blogs/Javascript基础/typescript/ts-axios-拦截器.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></div> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/FE-Notes/assets/js/app.1f7f5e3d.js" defer></script><script src="/FE-Notes/assets/js/2.511240e2.js" defer></script><script src="/FE-Notes/assets/js/8.9df1afce.js" defer></script>
+  </body>
+</html>
