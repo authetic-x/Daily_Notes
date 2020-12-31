@@ -1,3 +1,5 @@
+## https
+
 `https = http + SSL/TSL`，https 在传输层和应用层之间多走了一层 `SSL/TSL`，这两个都是加密协议，全称 `Secure Socket Layer 和 Transport Layer Security`
 
 下面详述 `https` 的三大优势：
@@ -29,3 +31,8 @@ https 有两套非对称加密，第一套用于协商加密密钥 SK；第二�
 ### 完整性校验：HTTPS 的哈希
 
 主要用在两个地方，一是证书的数字签名，二是对称加密的消息摘要，判断通信的数据是否被篡改。
+
+
+
+## http2.0
+
