@@ -152,6 +152,27 @@
 
 22. 0.1+0.2问题，有些十进制小数转化为二进制时会出现无限循环的现象，由于 js 中 Number 类型是双精度浮点数，字长限制为64位，超出了这个长度必然有一段被截掉了，就会产生精度的损失。**解决方案：**1. `Number.EPSILON`常量用来表示这种精度损失的差异，比如 `0.2-0.3+0.1 < Number.EPSILON` 为 true；2. 可以先将小数转化为正数，比如 `(0.1 * 1000 + 0.2 * 1000) / 1000`；3. 用一些第三方的 JS 库，比如 `math.js`
 
+23. ```js
+    console.log(typeof a)
+    var a = 1
+    console.log(typeof a)
+    var a = '1'
+    console.log(typeof a)
+    function a() {
+        console.log(typeof a)
+    }
+    console.log(typeof a)
+    a()
+    
+    // output: function number string string Uncaught TypeError: a is not a function
+    ```
+
+    函数相当于是直接提升到顶部声明并且赋值，后面修改函数同名变量会覆盖掉函数。
+
+24. 父子组件 useEffect 谁先执行？子组件的先执行。useEffect 相当于 `componengDidMount、componentDidUpdate、componentWillUnmount` 结合体，子组件的 `componentDidMount` 生命周期函数是先于父组件执行的，可以理解为只有子组件的内容全部加载完父组件才算加载完。
+
+25. `useEffect和useLayoutEffect` 的区别？简单来说，useEffect 是异步的，而 useLayoutEffect 是同步的。如果在 useEffect 中操作 dom，可能会造成页面的闪烁，因为页面的更新和 useEffect 的执行是并行完成的。
+
 
 
 ## 掘金上的高频面试题总结
