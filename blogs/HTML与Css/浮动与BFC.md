@@ -1,6 +1,6 @@
 ## 布局
 
-`position: absolute` 和 float 会隐式地改变 display 类型，不论之前是什么类型的元素 (display:none) 除外，主要设置 `position: absolute` 和 float 中任意一个，都会让元素以 `display: inline-block` 的方式显示，可以设置长宽，默认宽度不占满父元素
+`position: absolute` 和 float 会隐式地改变 display 类型，不论之前是什么类型的元素 (display:none) 除外，主要设置 `position: absolute` 和 float 中任意一个，都会让元素以 `display: inline-block` 的方式显示，**可以设置长宽，默认宽度不占满父元素**
 
 
 
@@ -12,7 +12,7 @@
 
 **对于浮动元素有些例外：**
 
-当负值的 margin 的方向与浮动流方向一直时，则元素会往对应的方向移动对应的距离。当负值的 margin 的方向与浮动流方向相反时，则元素本身不动，元素之前或者之后的元素会向该元素的方向移动相应的距离。
+当负值的 margin 的方向与浮动流方向一致时，则元素会往对应的方向移动对应的距离。当负值的 margin 的方向与浮动流方向相反时，则元素本身不动，元素之前或者之后的元素会向该元素的方向移动相应的距离。
 
 
 

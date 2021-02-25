@@ -4,6 +4,54 @@
 
 
 
+## async/await 执行顺序的思考
+
+头条有一道经典的异步逻辑面试题：
+
+```js
+async function async1(){
+  console.log('async1 start')
+  await async2()
+  console.log('async1 end')
+} 
+async function async2(){
+  console.log('async2')
+}
+
+console.log('script start')
+
+setTimeout(function(){
+  console.log('setTimeOut')
+}, 0)
+
+async1()
+
+new Promise(function(resolve){
+  console.log('promise1')
+  resolve()
+}).then(function(){
+  console.log('promise2')
+})
+
+console.log('script end')
+```
+
+代码执行顺序为：script start、async1 start、async2、promise1、script end、promise2、async1 end
+
+setTimeOut。
+
+我第一次做的时候，我把 async1 end 放在了 promise2 的前面。原因是我当时觉得 await 后面的逻辑相当于是绑定在 await 后面的 Promise 的 then 函数里，但实际不是这样的。
+
+### await 后面的是同步逻辑时
+
+await 仍旧会中断 async 函数的执行，但是 await 后面的代码会先于微任务队列里的回调函数执行。
+
+### await 后面的是异步逻辑时
+
+await 后面的代码会在 Promise resolve 后执行，而且执行时机在微任务队列的末尾！
+
+
+
 ## Promise、async/await 中如何进行错误处理？
 
 ### 1. Promise 中的错误捕获
@@ -40,7 +88,7 @@ new Promise((resolve) => {
 
 ### 2. async 函数中如何捕获错误？
 
-在 async 函数里抛出的错误相当于 返回了一个 `Promise.reject(e)`，可以在外部用 catch 语句进行捕获
+在 async 函数里抛出的错误相当于返回了一个 `Promise.reject(e)`，可以在外部用 catch 语句进行捕获
 
 ```js
 async function fn() {
