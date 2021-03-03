@@ -18,13 +18,93 @@
 
 ## BFC
 
-### 特征
-
-1. 不会与浮动元素发生重叠
-2. 包含浮动元素，父元素会计算浮动元素的高度，不会发生塌陷
-3. 没有外边距折叠 (外边距折叠主要发生在相邻兄弟元素和父子元素中，外边距取大者)
+块级格式化上下文(Block Formatting Context)，它是页面中的一块渲染区域，并且有一套渲染规则，它决定了其子元素将如何定位，以及和其他元素的关系和相互作用。
 
 
+
+### 触发BFC的条件
+
+- body 根元素
+- 浮动元素：float 除 none 以外的值
+- 绝对定位元素：position (absolute、fixed)
+- display 为 inline-block、table-cells、flex
+- overflow 除了 visible 以外的值 (hidden、auto、scroll)
+
+
+
+### 1. 解决父元素高度塌陷问题
+
+```html
+<div class="box-wrapper">
+  <div class="box"></div>
+</div>
+
+.box-wrapper {
+	overflow: hidden;
+	.box {
+		float: left;
+		width: 100px
+		height: 100px;
+	}
+}
+```
+
+### 2. 消除外边距折叠
+
+发生外边距的条件：
+
+1. 都是普通流中的元素且属于同一个 BFC
+2. 没有被 padding、border、clear 或非空内容隔开
+3. 两个或两个以上垂直方向的「相邻元素」
+
+```html
+<!-- 1. 兄弟元素 -->
+<div class="box-1"></div>
+<div class="box-2"></div>
+
+.box-1 {
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+.box-2 {
+	overflow: hidden;
+	margin-top: 20px;
+}
+
+<!-- 2. 父子元素 -->
+<div class="parent">
+  <div class="child"></div>
+</div>
+
+.parent {
+	overflow: hidden;
+	.child {
+		overflow: hidden;
+		margin-top: 20px;
+	}
+}
+```
+
+### 3. BFC容器不会与浮动元素发生重叠
+
+```html
+<div class="box-wrapper">
+  <div class="box"></div>
+  <div class="text"></div>
+</div>
+
+.box-wrapper {
+  overflow: hidden;
+  .box {
+    width: 100px;
+    height: 100px;
+  }
+  .text {
+    overflow: hidden;
+    height: 100px;
+  }
+}
+```
 
 ### zoom: 1
 
